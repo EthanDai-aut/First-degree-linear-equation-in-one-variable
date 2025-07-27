@@ -1,48 +1,40 @@
 #include<iostream>
 #include<string>
 using namespace std;
-string KuoHao(string n) {
-    if (n[0] != '-' || n[0] != '+') {
-        n = '+' + n;
+string Kuohao(string s) {
+    if (s[0] != '+' || s[1] != '-' || s[2] != '*' || s[3] != '/') {
+        s = "+" + s;
     }
-    int fuhaoshu = 0;//fuhaoshu用于存储有多少个符号
-    for (int i = 0;i<n.length();i++) {
-        if (n[i] == '-' || n[i] == '+' || n[i] == '*' || n[i] == '/') {
+
+    int fuhaoshu = 0;
+    for (int i=0;i<=s.length()-1;i++) {
+        if (s[i] == '-' || s[i] == '*' || s[i] == '/' || s[i] == '+') {
             fuhaoshu++;
         }
     }
-
-    //left是用于储存上一个符号的位置
-    int left = 0;
-    //h是用于储存各个单项式
-    string h[fuhaoshu-1];
-    //tot表示h的当前下标
-    int tot = 0;
-    for (int i=0;i<=n.length()-1;i++) {
+    //h是所有单项式
+    string h[fuhaoshu];
+    int left = 0,tot=0;
+    for (int i=0;i<=s.length()-1;i++) {
         if (i == 0) {
             continue;
         }
-        if (n[i] == '-' || n[i] == '+' || n[i] == '/' || n[i] == '*') {
-            h[tot] = n.substr(left, i - left);
-            cout << h[tot] << endl;
+        if (s[i] == '-' || s[i] == '*' || s[i] == '/' || s[i] == '+') {
+            h[tot] = s.substr(left,i-left);
             left = i;
         }
-
-        if (i == fuhaoshu - 1) {
-            h[tot] = n.substr(left, i - left); //0 1 2 3 4 i=3 left=1
-
+        if (i == s.length()-1) {
+            h[tot] = s.substr(left,i-left);
         }
-        cout << h[tot] << " " << n[i] << endl;
-
+        tot++;
     }
-    return h[0];
+
+    cout << h[0] << h[1] << h[2] << h[3];
 }
 int main() {
-    string n;
-    cin >> n;
-    string h = KuoHao(n);
-    cout << h;
+    string s;
+    cin >> s;
+    Kuohao(s);
     return 0;
 }
-
 
